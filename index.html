@@ -10,29 +10,21 @@
             padding: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
             background-color: black;
+            overflow-y: scroll; /* Permite derularea pe verticală */
         }
         #video-container {
             width: 100%;
-            height: 100%;
-            position: fixed; /* Fixează videoclipul în poziție */
-            top: 0;
-            left: 0;
-            z-index: 1;
+            height: 100vh; /* Ocupă 100% din înălțimea vizibilă a ferestrei */
+            position: relative;
         }
         video {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        .scroll-content {
-            width: 100%;
-            height: 200vh; /* Îi oferim conținut suplimentar pentru a permite scroll-ul */
-            position: relative;
-            z-index: 2; /* Conținutul suplimentar apare peste videoclip */
-            background-color: transparent; /* Fundal transparent pentru a vedea videoclipul */
-            margin-top: 100vh; /* Permite scroll-ul imediat după videoclip */
+        .scroll-space {
+            height: 100vh; /* Adaugă un spațiu suplimentar pentru derulare */
         }
     </style>
 </head>
@@ -42,7 +34,7 @@
     <video id="video" autoplay muted playsinline></video>
 </div>
 
-<div class="scroll-content"></div> <!-- Conținut suplimentar pentru scroll -->
+<div id="scroll-space"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script>
@@ -65,6 +57,18 @@
 
     video.addEventListener('click', function() {
         video.muted = !video.muted;
+    });
+
+    // Adaugă dinamic mai multe spații de derulare la scroll
+    window.addEventListener('scroll', function() {
+        const scrollSpace = document.getElementById('scroll-space');
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight) {
+            for (let i = 0; i < 5; i++) {
+                let newSpace = document.createElement('div');
+                newSpace.className = 'scroll-space';
+                scrollSpace.appendChild(newSpace);
+            }
+        }
     });
 </script>
 
