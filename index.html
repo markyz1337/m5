@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stream</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: black;
+        }
+        #video-container {
+            width: 100%;
+            height: 100%;
+            position: fixed; /* Fixează videoclipul în poziție */
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .scroll-content {
+            width: 100%;
+            height: 200vh; /* Îi oferim conținut suplimentar pentru a permite scroll-ul */
+            position: relative;
+            z-index: 2; /* Conținutul suplimentar apare peste videoclip */
+            background-color: transparent; /* Fundal transparent pentru a vedea videoclipul */
+            margin-top: 100vh; /* Permite scroll-ul imediat după videoclip */
+        }
+    </style>
+</head>
+<body>
+
+<div id="video-container">
+    <video id="video" autoplay muted playsinline></video>
+</div>
+
+<div class="scroll-content"></div> <!-- Conținut suplimentar pentru scroll -->
+
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script>
+    const video = document.getElementById('video');
+    const videoSrc = 'https://atomic.streamnet.ro/atomictv.m3u8';
+
+    if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(videoSrc);
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+            video.play();
+        });
+    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = videoSrc;
+        video.addEventListener('loadedmetadata', function() {
+            video.play();
+        });
+    }
+
+    video.addEventListener('click', function() {
+        video.muted = !video.muted;
+    });
+</script>
+
+</body>
+</html>
