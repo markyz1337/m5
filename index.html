@@ -13,6 +13,22 @@
             background-color: black;
             overflow: scroll; /* Permite derularea pe verticală și orizontală */
         }
+
+        /* Personalizarea barelor de derulare */
+        ::-webkit-scrollbar {
+            width: 0px; /* Grosimea barei de derulare verticală */
+            height: 0px; /* Grosimea barei de derulare orizontală */
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3); /* Culoarea și transparența thumb-ului */
+            border-radius: 4px; /* Colțurile rotunjite ale thumb-ului */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1); /* Culoarea track-ului */
+        }
+
         #video-container {
             width: 100vw; /* Ocupă 100% din lățimea vizibilă a ferestrei */
             height: 100vh; /* Ocupă 100% din înălțimea vizibilă a ferestrei */
